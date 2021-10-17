@@ -14,6 +14,9 @@ if (NOT (CMAKE_CXX_COMPILER_ID MATCHES "Clang"))
   add_definitions( -Werror )
 endif()
 
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -msse4.1")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -msse4.1")
+
 cs_add_library(${PROJECT_NAME} src/brisk-descriptor-extractor.cc
                                src/brisk-feature-detector.cc
                                src/brisk-layer.cc
@@ -39,6 +42,10 @@ if (IS_SSE_ENABLED)
 else()
   message(WARNING "Neon instructions not implemented for ethzasl_brisk.")
 endif()
+
+find_package(OpenCV REQUIRED)
+include_directories(${OpenCV_INCLUDE_DIRS})
+target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS})
 
 
 # Testing.

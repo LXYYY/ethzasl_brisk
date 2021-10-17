@@ -14,7 +14,11 @@ endif()
 file(GLOB AGAST_SOURCE_FILES  "${PROJECT_SOURCE_DIR}/src/*.cc")
 file(GLOB AGAST_HEADER_FILES  "${PROJECT_SOURCE_DIR}/include/agast/*.h")
 
+find_package(OpenCV REQUIRED)
+include_directories(${OpenCV_INCLUDE_DIRS})
+
 cs_add_library(${PROJECT_NAME} ${AGAST_SOURCE_FILES})
+target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS})
 
 cs_export(CFG_EXTRAS export_flags.cmake)
 cs_install()
